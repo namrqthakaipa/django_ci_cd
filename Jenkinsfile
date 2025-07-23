@@ -30,8 +30,9 @@ pipeline {
             steps {
                 sshagent(['Djangocicd-EC2']) {
                     sh '''
-                    scp -o StrictHostKeyChecking=no -r $WORKSPACE/Django_CICD ubuntu@52.90.186.240:/home/ubuntu/
-        
+                    sh '''
+                        scp -o StrictHostKeyChecking=no -r $WORKSPACE ubuntu@52.90.186.240:/home/ubuntu/
+                        '''
                     ssh -o StrictHostKeyChecking=no ubuntu@52.90.186.240 << EOF
                         cd /home/ubuntu/Django_CICD
                         chmod +x scripts/envsetup.sh
