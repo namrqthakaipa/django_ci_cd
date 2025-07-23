@@ -28,7 +28,7 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                sshagent(['EC2-user']) {
+                sshagent(['Djangocicd-EC2']) {
                     sh '''
                     scp -o StrictHostKeyChecking=no -r $WORKSPACE/Django_CICD ubuntu@52.90.186.240:/home/ubuntu/
         
