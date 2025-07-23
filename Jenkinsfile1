@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        EC2_IP = "52.90.186.240"
+        EC2_IP = "13.222.214.10"
         EC2_USER = "ubuntu"
         REMOTE_DIR = "/home/ubuntu/Django_CICD"
     }
