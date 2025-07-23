@@ -30,10 +30,8 @@ pipeline {
             steps {
                 sshagent(['EC2-user']) {
                     sh '''
-                    # Copy project directory to EC2
                     scp -o StrictHostKeyChecking=no -r $WORKSPACE/Django_CICD ubuntu@52.90.186.240:/home/ubuntu/
         
-                    # SSH into EC2 and run setup scripts
                     ssh -o StrictHostKeyChecking=no ubuntu@52.90.186.240 << EOF
                         cd /home/ubuntu/Django_CICD
                         chmod +x scripts/envsetup.sh
