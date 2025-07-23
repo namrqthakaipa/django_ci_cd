@@ -1,25 +1,27 @@
 pipeline {
     agent any
+
     environment {
         EC2_IP = "52.90.186.240"
         EC2_USER = "ubuntu"
         REMOTE_DIR = "/home/ubuntu/Django_CICD"
-        REPO_URL = "https://github.com/namrqthakaipa/Django_Project.git"
+        REPO_URL = "git@github.com:namrqthakaipa/Django_Project.git" 
+        VENV_DIR = "$REMOTE_DIR/env"
     }
 
     stages {
         stage('Clone or Pull from Git on EC2') {
             steps {
-                sshagent(['Djangocicd-EC2']) {
+                sshagent(credentials: ['Djangocicd-EC2']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP << EOF
-                        if [ ! -d "$REMOTE_DIR/.git" ]; then
-                            git clone $REPO_URL $REMOTE_DIR
-                        else
-                            cd $REMOTE_DIR
-                            git pull origin main
-                        fi
-                    EOF
+                        ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP '
+                            if [ ! -d "$REMOTE_DIR/.git" ]; then
+                                git clone $REPO_URL $REMOTE_DIR
+                            else
+                                cd $REMOTE_DIR
+                                git pull origin main
+                            fi
+                        '
                     """
                 }
             }
@@ -27,15 +29,15 @@ pipeline {
 
         stage('Set Up Python Environment') {
             steps {
-                sshagent(['Djangocicd-EC2']) {
+                sshagent(credentials: ['Djangocicd-EC2']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP << EOF
-                        cd $REMOTE_DIR
-                        python3 -m venv env
-                        source env/bin/activate
-                        pip install --upgrade pip
-                        pip install -r requirements.txt
-                    EOF
+                        ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP '
+                            cd $REMOTE_DIR
+                            python3 -m venv env
+                            source env/bin/activate
+                            pip install --upgrade pip
+                            pip install -r requirements.txt
+                        '
                     """
                 }
             }
@@ -43,44 +45,43 @@ pipeline {
 
         stage('Run Migrations & Collect Static') {
             steps {
-                sshagent(['Djangocicd-EC2']) {
+                sshagent(credentials: ['Djangocicd-EC2']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP << EOF
-                        cd $REMOTE_DIR
-                        source env/bin/activate
-                        python3 manage.py makemigrations
-                        python3 manage.py migrate
-                        python3 manage.py collectstatic --noinput
-                    EOF
+                        ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP '
+                            cd $REMOTE_DIR
+                            source env/bin/activate
+                            python3 manage.py makemigrations
+                            python3 manage.py migrate
+                            python3 manage.py collectstatic --noinput
+                        '
                     """
                 }
             }
         }
 
-          stage('Install Gunicorn & Nginx if Needed') {
-        steps {
-            sshagent(['Djangocicd-EC2']) {
-                sh """
-                ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP << EOF
-                    sudo apt update
-                    sudo apt install -y nginx
-                    source $REMOTE_DIR/env/bin/activate
-                    pip install gunicorn
-                EOF
-                """
+        stage('Install Gunicorn & Nginx if Needed') {
+            steps {
+                sshagent(credentials: ['Djangocicd-EC2']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP '
+                            sudo apt update
+                            sudo apt install -y nginx
+                            source $VENV_DIR/bin/activate
+                            pip install gunicorn
+                        '
+                    """
+                }
             }
         }
-    }
-
 
         stage('Start Gunicorn & Nginx') {
             steps {
-                sshagent(['Djangocicd-EC2']) {
+                sshagent(credentials: ['Djangocicd-EC2']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP << EOF
-                        sudo systemctl restart gunicorn
-                        sudo systemctl restart nginx
-                    EOF
+                        ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP '
+                            sudo systemctl restart gunicorn || echo "Gunicorn restart failed or not yet configured"
+                            sudo systemctl restart nginx
+                        '
                     """
                 }
             }
