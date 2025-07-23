@@ -1,5 +1,8 @@
 #!/bin/bash
 
+sudo apt update
+sudo apt install -y python3.12-venv
+
 if [ ! -d "env" ]; then
     python3.12 -m venv env
     echo " Virtual environment created."
