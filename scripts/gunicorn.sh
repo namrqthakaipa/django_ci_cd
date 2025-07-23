@@ -2,7 +2,7 @@
 
 source env/bin/activate
 
-cd /var/lib/jenkins/workspace/Django_CICD/app
+cd /home/ubuntu/Django_CICD/app
 
 python3 manage.py makemigrations
 python3 manage.py migrate
@@ -10,7 +10,7 @@ python3 manage.py collectstatic -- no-input
 
 echo "Migrations done"
 
-cd /var/lib/jenkins/workspace/Django_CICD
+cd /home/ubuntu/Django_CICD
 
 pwd
 
