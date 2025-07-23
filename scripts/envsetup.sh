@@ -10,7 +10,7 @@ else
     echo " Virtual environment already exists."
 fi
 
-source Django_CICD/env/bin/activate
+source Django_CICD/nam-env/bin/activate
 
 pip install --upgrade pip
 
