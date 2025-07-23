@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ -d "env" ] 
-then
-    echo "Python virtual environment exists." 
-else
+if [ ! -d "env" ]; then
     python3.12 -m venv env
+    echo " Virtual environment created."
+else
+    echo " Virtual environment already exists."
 fi
 
 source env/bin/activate
