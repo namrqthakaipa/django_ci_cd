@@ -3,14 +3,14 @@
 sudo apt update
 sudo apt install -y python3.12-venv
 
-if [ ! -d "env" ]; then
-    python3.12 -m venv env
+if [ ! -d "nam-env" ]; then
+    python3.12 -m venv nam-env
     echo " Virtual environment created."
 else
     echo " Virtual environment already exists."
 fi
 
-source env/bin/activate
+source Django_CICD/env/bin/activate
 
 pip install --upgrade pip
 
