@@ -25,5 +25,34 @@ pipeline {
                 '''
             }
         }
+
+        stage('Deploy to EC2') {
+            steps {
+                sshagent(['ec2-ssh']) {
+                    sh '''
+                    # Copy project directory to EC2
+                    scp -o StrictHostKeyChecking=no -r $WORKSPACE/Django_CICD ubuntu@52.90.186.240:/home/ubuntu/
+        
+                    # SSH into EC2 and run setup scripts
+                    ssh -o StrictHostKeyChecking=no ubuntu@52.90.186.240 << EOF
+                        cd /home/ubuntu/Django_CICD
+                        chmod +x scripts/envsetup.sh
+                        chmod +x scripts/gunicorn.sh
+                        chmod +x scripts/nginx.sh
+                        ./scripts/envsetup.sh
+                        ./scripts/gunicorn.sh
+                        ./scripts/nginx.sh
+                        sudo systemctl daemon-reexec
+                        sudo systemctl daemon-reload
+                        sudo systemctl restart gunicorn
+                        sudo systemctl restart nginx
+                    EOF
+                    '''
+                }
+            }
+        }
+
+
+        
     }
 }
