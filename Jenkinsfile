@@ -28,7 +28,7 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                sshagent(['ec2-ssh']) {
+                sshagent(['EC2-user']) {
                     sh '''
                     # Copy project directory to EC2
                     scp -o StrictHostKeyChecking=no -r $WORKSPACE/Django_CICD ubuntu@52.90.186.240:/home/ubuntu/
