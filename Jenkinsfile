@@ -30,7 +30,6 @@ pipeline {
             steps {
                 sshagent(['Djangocicd-EC2']) {
                     sh '''
-                    sh '''
                         scp -o StrictHostKeyChecking=no -r $WORKSPACE ubuntu@52.90.186.240:/home/ubuntu/
                         '''
                     ssh -o StrictHostKeyChecking=no ubuntu@52.90.186.240 << EOF
