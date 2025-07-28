@@ -10,7 +10,7 @@ python3 manage.py collectstatic -- no-input
 
 echo "Migrations done"
 
-cd /home/ubuntu/Django_CICD
+cd /opt/Django_CICD
 
 pwd
 
