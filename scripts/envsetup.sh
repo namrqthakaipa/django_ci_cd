@@ -31,6 +31,7 @@ pip install --upgrade pip
 cd ..
 
 pip install -r requirements.txt
+pip install gunicorn
 
 # Create logs directory and log files if not present
 if [ ! -d "logs" ]; then
