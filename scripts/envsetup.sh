@@ -27,6 +27,9 @@ source nam-env/bin/activate
 
 # Upgrade pip and install dependencies
 pip install --upgrade pip
+
+cd ..
+
 pip install -r requirements.txt
 
 # Create logs directory and log files if not present
