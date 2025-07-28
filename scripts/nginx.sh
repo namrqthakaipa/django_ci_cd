@@ -1,5 +1,6 @@
 #!/bin/bash
-
+echo "PWD"
+pwd
 sudo cp -rf app.conf /etc/nginx/sites-available/app
 chmod 710 /opt/Django_CICD
 
