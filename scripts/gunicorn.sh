@@ -2,7 +2,7 @@
 
 source nam-env/bin/activate
 
-cd /home/ubuntu/Django_CICD/app
+cd /opt/Django_CICD/app
 
 python3 manage.py makemigrations
 python3 manage.py migrate
