@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source nam-env/bin/activate
 
 cd /opt/Django_CICD/app
 
