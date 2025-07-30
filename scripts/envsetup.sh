@@ -1,11 +1,11 @@
 #!/bin/bash
 
-set -e  # Exit immediately if a command fails
-set -x  # Print each command before executing 
+set -e  
+set -x  
 
 # Update packages and install venv if not already installed
 
-#ENV_DIR="/opt/Django_CICD/nam-env"
+
 INSTALL_FLAG="$1"
 export ENV_NAME="${2:-new-env}"
 echo "ENV_NAME=$ENV_NAME" > /opt/Django_CICD/.env_config
@@ -44,13 +44,13 @@ fi
 # Giving permision to virtual environment
 sudo chown -R "$USER:$USER" "$ENV_DIR"
 
-# Step 2 : Activate the virtual environment
+# Step 3 : Activate the virtual environment
 source "$ENV_DIR/bin/activate"
 
 echo "INSTALL_DEPS received: '$INSTALL_DEPS'"
 echo "ENV_NAME received: '$ENV_NAME'"
 
-# Step 3: Install requirements only if flag is passed
+# Step 4: Install requirements only if flag is passed
 if [[ "$INSTALL_FLAG" == "--install" ]]; then
     echo " Installing dependencies from requirements.txt"
     cd "$BASE_DIR"
