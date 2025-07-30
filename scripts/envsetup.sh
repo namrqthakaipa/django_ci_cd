@@ -1,12 +1,19 @@
 #!/bin/bash
 
 set -e  # Exit immediately if a command fails
-set -x  # Print each command before executing (for debug)
+set -x  # Print each command before executing 
 
 # Update packages and install venv if not already installed
-ENV_DIR="/opt/Django_CICD/nam-env"
-INSTALL_FLAG="$1"
 
+#ENV_DIR="/opt/Django_CICD/nam-env"
+INSTALL_FLAG="$1"
+ENV_NAME="${2:-new-env}"
+
+# Base directory
+BASE_DIR="/opt/Django_CICD"
+ENV_DIR="$BASE_DIR/$ENV_NAME"
+
+#update package list
 sudo apt update
 
 # Install python3.12-venv if not installed
@@ -32,26 +39,26 @@ else
     fi
 fi
 
-# Ensure we own the environment folder (avoid permission denied)
+# Giving permision to virtual environment
 sudo chown -R "$USER:$USER" "$ENV_DIR"
 
 # Step 2 : Activate the virtual environment
 source "$ENV_DIR/bin/activate"
 
-echo "INSTALL_FLAG received: '$1'"
+echo "INSTALL_DEPS received: '$INSTALL_DEPS'"
+echo "ENV_NAME received: '$ENV_NAME'"
 
-# Step 4: Install requirements only if flag is passed
+# Step 3: Install requirements only if flag is passed
 if [[ "$INSTALL_FLAG" == "--install" ]]; then
     echo " Installing dependencies from requirements.txt"
-    pwd
-    cd /opt/Django_CICD/
+    cd "$BASE_DIR"
     pip install -r requirements.txt
 else
     echo " Skipping dependency installation as '--install' flag not provided."
 fi
 
 # Step 5: Create logs directory
-LOG_DIR="logs"
+LOG_DIR="$BASE_DIR/logs"
 if [ ! -d "$LOG_DIR" ]; then
     echo " Creating logs directory..."
     mkdir "$LOG_DIR"
