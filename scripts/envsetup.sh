@@ -38,14 +38,13 @@ sudo chown -R "$USER:$USER" "$ENV_DIR"
 # Step 2 : Activate the virtual environment
 source "$ENV_DIR/bin/activate"
 
-# Step 3 :Upgrade pip and install dependencies
-
 echo "INSTALL_FLAG received: '$1'"
 
 # Step 4: Install requirements only if flag is passed
 if [[ "$INSTALL_FLAG" == "--install" ]]; then
     echo " Installing dependencies from requirements.txt"
-    cd scripts
+    pwd
+    cd /opt/Django_CICD/scripts/
     pip install -r requirements.txt
     pip install gunicorn
 else
