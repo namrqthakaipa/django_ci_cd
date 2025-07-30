@@ -9,16 +9,13 @@ INSTALL_FLAG="$1"
 
 sudo apt update
 
-# Ensure we own the environment folder (avoid permission denied)
-
-
 # Install python3.12-venv if not installed
 if ! python3.12 -m venv --help >/dev/null 2>&1; then
     echo "Installing python3.12-venv..."
     sudo apt update
     sudo apt install -y python3.12-venv
 else
-        echo "The Python environment is already present"
+        echo "The Python virtual is installed"
 fi
 
 
@@ -35,27 +32,25 @@ else
     fi
 fi
 
+# Ensure we own the environment folder (avoid permission denied)
 sudo chown -R "$USER:$USER" "$ENV_DIR"
-
 
 # Step 2 : Activate the virtual environment
 source "$ENV_DIR/bin/activate"
 
 # Step 3 :Upgrade pip and install dependencies
-pip install --upgrade pip
 
 echo "INSTALL_FLAG received: '$1'"
 
 # Step 4: Install requirements only if flag is passed
 if [[ "$INSTALL_FLAG" == "--install" ]]; then
-    echo " Installing dependencies from requirements.txt..."
+    echo " Installing dependencies from requirements.txt"
+    cd scripts
     pip install -r requirements.txt
     pip install gunicorn
 else
     echo " Skipping dependency installation as '--install' flag not provided."
 fi
-
-pip install gunicorn
 
 # Step 5: Create logs directory
 LOG_DIR="logs"
