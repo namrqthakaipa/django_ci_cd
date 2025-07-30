@@ -11,8 +11,6 @@ echo "Migrations done"
 
 cd /opt/Django_CICD
 
-pwd
-
 sudo cp -rf scripts/gunicorn.socket /etc/systemd/system/
 sudo cp -rf scripts/gunicorn.service /etc/systemd/system/
 
