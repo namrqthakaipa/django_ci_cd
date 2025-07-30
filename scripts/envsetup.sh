@@ -46,7 +46,6 @@ if [[ "$INSTALL_FLAG" == "--install" ]]; then
     pwd
     cd /opt/Django_CICD/
     pip install -r requirements.txt
-    pip install gunicorn
 else
     echo " Skipping dependency installation as '--install' flag not provided."
 fi
