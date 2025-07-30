@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# source /opt/Django_CICD/.env_config
-# source "/opt/Django_CICD/$ENV_NAME/bin/activate"
-# cd /opt/Django_CICD/app
-
-source /opt/Django_CICD/env-new/bin/activate
+source /opt/Django_CICD/.env_config
+source "/opt/Django_CICD/$ENV_NAME/bin/activate"
+cd /opt/Django_CICD/app
 
 python3 manage.py makemigrations
 python3 manage.py migrate
