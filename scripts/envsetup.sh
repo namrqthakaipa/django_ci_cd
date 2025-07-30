@@ -24,7 +24,7 @@ fi
 if [ -d "$ENV_DIR" ]; then
     echo " Virtual environment '$ENV_DIR' already exists. Activating it."
 else
-    echo "🛠 Creating new virtual environment: '$ENV_DIR'"
+    echo " Creating new virtual environment: '$ENV_DIR'"
     python3.12 -m venv "$ENV_DIR"
 
     if [ $? -ne 0 ]; then
@@ -42,14 +42,15 @@ source "$ENV_DIR/bin/activate"
 # Step 3 :Upgrade pip and install dependencies
 pip install --upgrade pip
 
+echo "INSTALL_FLAG received: '$1'"
 
 # Step 4: Install requirements only if flag is passed
 if [[ "$INSTALL_FLAG" == "--install" ]]; then
-    echo "📦 Installing dependencies from requirements.txt..."
+    echo " Installing dependencies from requirements.txt..."
     pip install -r requirements.txt
     pip install gunicorn
 else
-    echo "⏭️ Skipping dependency installation as '--install' flag not provided."
+    echo " Skipping dependency installation as '--install' flag not provided."
 fi
 
 pip install gunicorn
@@ -57,12 +58,12 @@ pip install gunicorn
 # Step 5: Create logs directory
 LOG_DIR="logs"
 if [ ! -d "$LOG_DIR" ]; then
-    echo "📝 Creating logs directory..."
+    echo " Creating logs directory..."
     mkdir "$LOG_DIR"
     touch "$LOG_DIR/error.log" "$LOG_DIR/access.log"
 else
-    echo "ℹ️ Logs directory already exists."
+    echo " Logs directory already exists."
 fi
 
 chmod -R 755 "$LOG_DIR"
-echo "✅ Environment setup complete."
+echo " Environment setup complete."
