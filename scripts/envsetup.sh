@@ -7,7 +7,8 @@ set -x  # Print each command before executing
 
 #ENV_DIR="/opt/Django_CICD/nam-env"
 INSTALL_FLAG="$1"
-ENV_NAME="${2:-new-env}"
+export ENV_NAME="${2:-new-env}"
+
 
 # Base directory
 BASE_DIR="/opt/Django_CICD"
