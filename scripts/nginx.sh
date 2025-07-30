@@ -3,10 +3,8 @@
 set -e
 set -x
 
-# source /opt/Django_CICD/.env_config
-# source "/opt/Django_CICD/$ENV_NAME/bin/activate"
-
-source /opt/Django_CICD/env-new/bin/activate
+source /opt/Django_CICD/.env_config
+source "/opt/Django_CICD/$ENV_NAME/bin/activate"
 
 echo " Current directory:"
 pwd
