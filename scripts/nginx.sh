@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /opt/Django_CICD/nam-env/bin/activate
+source $ENV_NAME/bin/activate
 echo "==> Current directory:"
 
 pwd
