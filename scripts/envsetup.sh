@@ -19,26 +19,27 @@ ENV_DIR="$BASE_DIR/$ENV_NAME"
 sudo apt update
 
 # Install python3.12-venv if not installed
-if ! python3.12 -m venv --help >/dev/null 2>&1; then
-    echo "Installing python3.12-venv..."
-    sudo apt update
-    sudo apt install -y python3.12-venv
-else
-        echo "The Python virtual is installed"
-fi
+# if ! python3.12 -m venv --help >/dev/null 2>&1; then
+#     echo "Installing python3.12-venv..."
+#     sudo apt update
+#     sudo apt install -y python3.12-venv
+# else
+#         echo "The Python virtual is installed"
+# fi
 
 
 # Step 1: Create virtual environment if it doesn't exist
 if [ -d "$ENV_DIR" ]; then
     echo " Virtual environment '$ENV_DIR' already exists. Activating it."
 else
-    echo " Creating new virtual environment: '$ENV_DIR'"
-    python3.12 -m venv "$ENV_DIR"
+    echo " The Virtual environment dosen't exist"
+    # echo " Creating new virtual environment: '$ENV_DIR'"
+    # python3.12 -m venv "$ENV_DIR"
 
-    if [ $? -ne 0 ]; then
-        echo " Failed to create virtual environment."
-        exit 1
-    fi
+    # if [ $? -ne 0 ]; then
+    #     echo " Failed to create virtual environment."
+    #     exit 1
+    # fi
 fi
 
 # Giving permision to virtual environment
