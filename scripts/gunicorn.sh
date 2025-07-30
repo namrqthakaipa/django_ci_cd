@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+source /opt/Django_CICD/nam-env/bin/activate
 cd /opt/Django_CICD/app
 
 python3 manage.py makemigrations
