@@ -34,13 +34,13 @@ if [ -d "$ENV_DIR" ]; then
     echo " Virtual environment '$ENV_DIR' already exists. Activating it."
 else
     echo " The Virtual environment dosen't exist"
-    # echo " Creating new virtual environment: '$ENV_DIR'"
-    # python3.12 -m venv "$ENV_DIR"
+    echo " Creating new virtual environment: '$ENV_DIR'"
+    python3.12 -m venv "$ENV_DIR"
 
-    # if [ $? -ne 0 ]; then
-    #     echo " Failed to create virtual environment."
-    #     exit 1
-    # fi
+    if [ $? -ne 0 ]; then
+        echo " Failed to create virtual environment."
+        exit 1
+    fi
 fi
 
 # Giving permision to virtual environment
