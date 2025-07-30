@@ -4,7 +4,7 @@ set -e  # Exit immediately if a command fails
 set -x  # Print each command before executing (for debug)
 
 # Update packages and install venv if not already installed
-ENV_DIR="/Django_CICD/nam-env"
+ENV_DIR="/opt/Django_CICD/nam-env"
 INSTALL_FLAG="$1"
 
 sudo apt update
@@ -13,12 +13,16 @@ sudo apt update
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
+# Ensure we own the environment folder (avoid permission denied)
+sudo chown -R "$USER:$USER" "$ENV_DIR"
+
 # Install python3.12-venv if not installed
 if ! python3.12 -m venv --help >/dev/null 2>&1; then
     echo "Installing python3.12-venv..."
     sudo apt update
     sudo apt install -y python3.12-venv
 fi
+
 
 # Step 1: Create virtual environment if it doesn't exist
 if [ -d "$ENV_DIR" ]; then
@@ -33,8 +37,7 @@ else
     fi
 fi
 
-# Ensure we own the environment folder (avoid permission denied)
-sudo chown -R "$USER:$USER" "$ENV_DIR"
+
 
 # Step 2 : Activate the virtual environment
 source "$ENV_DIR/bin/activate"
