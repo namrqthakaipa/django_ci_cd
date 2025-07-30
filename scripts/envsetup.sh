@@ -9,18 +9,16 @@ INSTALL_FLAG="$1"
 
 sudo apt update
 
-# Ensure script runs from the script directory
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-cd "$SCRIPT_DIR"
-
 # Ensure we own the environment folder (avoid permission denied)
-sudo chown -R "$USER:$USER" "$ENV_DIR"
+
 
 # Install python3.12-venv if not installed
 if ! python3.12 -m venv --help >/dev/null 2>&1; then
     echo "Installing python3.12-venv..."
     sudo apt update
     sudo apt install -y python3.12-venv
+else
+        echo "The Python environment is already present"
 fi
 
 
@@ -37,6 +35,7 @@ else
     fi
 fi
 
+sudo chown -R "$USER:$USER" "$ENV_DIR"
 
 
 # Step 2 : Activate the virtual environment
