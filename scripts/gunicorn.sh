@@ -8,29 +8,23 @@ python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py collectstatic --noinput
 
-echo "Migrations done"
-
-cd /opt/Django_CICD
-
-sudo cp -rf scripts/gunicorn.socket /etc/systemd/system/
-sudo cp -rf scripts/gunicorn.service /etc/systemd/system/
-
-echo "$USER"
-echo "$PWD"
+echo "Migrations and static files setup complete."
 
 
+if systemctl is-active --quiet gunicorn; then
+    echo "Gunicorn is already active. Skipping service setup."
+else
+    echo "Gunicorn is not active. Proceeding with service setup..."
 
-sudo systemctl daemon-reload
-sudo systemctl start gunicorn
+    # Copy service files only if necessary
+    sudo cp -rf scripts/gunicorn.socket /etc/systemd/system/
+    sudo cp -rf scripts/gunicorn.service /etc/systemd/system/
 
-echo "Gunicorn has started."
-
-sudo systemctl enable gunicorn
-
-echo "Gunicorn has been enabled."
-
-sudo systemctl restart gunicorn
-
+    sudo systemctl daemon-reload
+    sudo systemctl start gunicorn
+    sudo systemctl enable gunicorn
+    echo "Gunicorn has been started and enabled."
+fi
 
 sudo systemctl status gunicorn
 
