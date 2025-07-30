@@ -44,7 +44,7 @@ echo "INSTALL_FLAG received: '$1'"
 if [[ "$INSTALL_FLAG" == "--install" ]]; then
     echo " Installing dependencies from requirements.txt"
     pwd
-    cd /opt/Django_CICD/scripts/
+    cd /opt/Django_CICD/
     pip install -r requirements.txt
     pip install gunicorn
 else
