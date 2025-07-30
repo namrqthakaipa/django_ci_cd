@@ -7,9 +7,8 @@ set -x
 
 
 INSTALL_FLAG="$1"
-# export ENV_NAME="${2:-new-env}"
-# echo "ENV_NAME=$ENV_NAME" > /opt/Django_CICD/.env_config
-ENV_NAME="env-new"
+export ENV_NAME="${2:-new-env}"
+echo "ENV_NAME=$ENV_NAME" > /opt/Django_CICD/.env_config
 
 
 # Base directory
@@ -19,14 +18,14 @@ ENV_DIR="$BASE_DIR/$ENV_NAME"
 #update package list
 sudo apt update
 
-# Install python3.12-venv if not installed
-# if ! python3.12 -m venv --help >/dev/null 2>&1; then
-#     echo "Installing python3.12-venv..."
-#     sudo apt update
-#     sudo apt install -y python3.12-venv
-# else
-#         echo "The Python virtual is installed"
-# fi
+Install python3.12-venv if not installed
+if ! python3.12 -m venv --help >/dev/null 2>&1; then
+    echo "Installing python3.12-venv..."
+    sudo apt update
+    sudo apt install -y python3.12-venv
+else
+        echo "The Python virtual is installed"
+fi
 
 
 # Step 1: Create virtual environment if it doesn't exist
