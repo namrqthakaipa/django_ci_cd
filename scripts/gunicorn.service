@@ -8,8 +8,7 @@ EnvironmentFile=/opt/Django_CICD/.env_config
 User=root
 Group=www-data
 WorkingDirectory=/opt/Django_CICD/app
-#ExecStart=/bin/bash -c 'source /opt/Django_CICD/.env_config && exec /opt/Django_CICD/${ENV_NAME}/bin/gunicorn --workers 3 --log-level debug --error-logfile /opt/Django_CICD/logs/error.log --bind unix:/run/gunicorn.sock app.wsgi:application'
-ExecStart=/opt/Django_CICD/nam-env/bin/gunicorn --workers 3 --log-level debug --error-logfile /opt/Django_CICD/logs/error.log --bind unix:/run/gunicorn.sock app.wsgi:application
+ExecStart=/bin/bash -c 'source /opt/Django_CICD/.env_config && exec /opt/Django_CICD/${ENV_NAME}/bin/gunicorn --workers 3 --log-level debug --error-logfile /opt/Django_CICD/logs/error.log --bind unix:/run/gunicorn.sock app.wsgi:application'
 
 [Install]
 WantedBy=multi-user.target
