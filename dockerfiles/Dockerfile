@@ -1,4 +1,4 @@
-FROM nginxinc/nginx-unprivileged:1-alpine
+FROM nginxinc/nginx-unprivileged:1.28.0-alpine
 #to run docker service as a least-previleged user, don't use default nginx image. 
 LABEL maintainer="ishwarjangid"
 
